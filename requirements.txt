@@ -1,0 +1,6 @@
+Django==2.2.2
+gunicorn==19.7.1
+requests==2.20.1
+sqlparse==0.3.0
+jsonfield==2.0.2
+jsonschema==2.6.0
