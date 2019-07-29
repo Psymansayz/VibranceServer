@@ -1,1 +1,1 @@
-web: gunicorn ParkingServer.wsgi
+web: gunicorn MDAdherence.wsgi
