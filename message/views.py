@@ -51,7 +51,7 @@ def notifications(request):
 	if request.method == "POST":
 		data = json.loads(request.body)
 		if 'title' in data and 'body' in data and 'id' in data:
-			Notification.objects.create(userId = data.get('id'), topic=data.get('title'), body =data.get('body'))
+			Notification.objects.create(userId = data.get('id'), title=data.get('title'), body =data.get('body'))
 			return HttpResponse("Notification created")
 		return HttpResponseBadRequest('missing fields in post request')
 	elif request.method == "GET":
