@@ -1,0 +1,87 @@
+Base URI: https://mdadherence.herokuapp.com
+note: id is an integerfield, all others are strings.
+note: trailing "/" required
+
+endpoint: "/login/"
+	Method: POST
+		does: attempts to login
+		fields required: "username", "password"
+		returns on success: ID/ auth token of user for use in later api calls.
+
+endpoint: "/login/create/"
+	Method: POST
+		does: attempts to create user
+		fields required: "username", "password"
+		returns on success: "account created" (200 ok status code)
+
+endpoint:"/medication/"
+	Method: POST
+		does: attempts to add new time to database (pill consumption time)
+		fields required: "id", "color"
+		returns on success:  all times that medication has been taken so far
+	Method: GET
+		does: returns all data on specifed medication
+		fields(1): "id"
+			returns on success: all medications for user with id
+		fields(2): "id", "color"
+			returns on success: information on specified medication
+
+endpoint:"/medication/new/"
+	Method: POST
+		does: attempts to add new medication
+		fields required: "id", "color", "name", "dosage", "frequency", "refillDate"
+		returns on success: "medication added"
+
+endpoint:"/medication/delete/"
+	Method: POST
+		does: attempts to delete medication from user
+		fields required: "id", "color"
+		returns on success: "deleted"
+
+endpoint:"/messages/"
+	Method: POST
+		does: attempts to create a message
+		fields required: "id", "body", "sender"
+		returns on success: "message created"
+	Method: GET
+		does: attempts to retrieve all messages for user
+		fields required: "id"
+		returns on success: all messages for user
+
+endpoint:"/messages/doctor/"
+	Method: POST
+		does: attempts to create a message from doctor
+		fields required: "id", "body", "sender"
+		returns on success: "message created"
+	Method: GET
+		does: attempts to retrieve all doctor messages for user
+		fields required: "id"
+		returns on success: all messages for user
+
+endpoint:"/messages/notes/"
+	Method: POST
+		does: attempts to create a note
+		fields required: "id", "body", "topic"
+		returns on success: "message created"
+	Method: GET
+		does: attempts to retrieve all notes for user
+		fields required: "id"
+		returns on success: all notes for user
+
+endpoint:"/messages/delete/"
+	Method: POST
+		does:deletes message with given message ID
+		fields: "id" (NOTE THIS IS THE MESSAGE ID NOT USER ID USED IN OTHER ENDPOINTS)
+		returns on success: "message deleted"
+
+endpoint:"/messages/deleteDoctor/"
+	Method: POST
+		does:deletes message with given message ID
+		fields: "id" (NOTE THIS IS THE MESSAGE ID NOT USER ID USED IN OTHER ENDPOINTS)
+		returns on success: "doctor message deleted"
+
+endpoint:"/messages/deleteNote/"
+	Method: POST
+		does:deletes message with given message ID
+		fields: "id" (NOTE THIS IS THE MESSAGE ID NOT USER ID USED IN OTHER ENDPOINTS)
+		returns on success: "Note deleted"

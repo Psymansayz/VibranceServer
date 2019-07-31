@@ -30,8 +30,11 @@ def create(request):
 			if User.objects.filter(username = data.get("username")):
 				return HttpResponseBadRequest('username already used')
 			else:
-				User.objects.create(username = data.get("username"), password = data.get("password"))
-				return HttpResponse('account created')
+				instance = User.objects.create(username = data.get("username"), password = data.get("password"))
+				retData = {
+					'id': instance.id
+				}
+				return JsonResponse(retData)
 		return HttpResponseBadRequest('Post did not include username and password')
 	else:
 		return HttpResponseBadRequest('Post new user only')
