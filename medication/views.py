@@ -62,3 +62,26 @@ def deleteMedication(request):
 				return HttpResponse("deleted")
 			return HttpResponseBadRequest('no medication of that color found')
 		return HttpResponseBadRequest('no id and color in post request')
+@csrf_exempt 
+def resetAdherence(request):
+	if request.method == "POST":
+		data = json.loads(request.body)
+		if 'id' in data and 'color' in data:
+			medication_instance = Medication.objects.filter(userId=data.get("id"))
+			if medication_instance and medication_instance.filter(color=data.get("color")):
+				medication_single = medication_instance.get(color=data.get("color"))
+				if medication_single.adherence:
+					retData = json.loads(medication_single.adherence)
+					retData['times'] = ""
+					medication_single.adherence = json.dumps(retData)
+					medication_single.save(update_fields=['adherence'])
+				else:
+					retData = {
+						'times' :[]
+					}
+					retData['times'].append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+					medication_single.adherence = json.dumps(retData)
+					medication_single.save(update_fields=['adherence'])
+				return HttpResponse(medication_single.adherence)
+			return HttpResponseBadRequest("no medication of that color found")
+		return HttpResponseBadRequest("no id and color field found in post request")
