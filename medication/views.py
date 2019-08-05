@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Medication
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 # Create your views here.
 @csrf_exempt
@@ -15,7 +15,10 @@ def medicationInfo(request):
 				medication_single = medication_instance.get(color=data.get("color"))
 				if medication_single.adherence:
 					retData = json.loads(medication_single.adherence)
-					retData['times'].append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+					if('days' in data):
+						retData['times'].append((datetime.now() - timedelta(days=data.get("days"))).strftime('%Y-%m-%d %H:%M:%S'))
+					else:
+						retData['times'].append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 					medication_single.adherence = json.dumps(retData)
 					medication_single.save(update_fields=['adherence'])
 				else:
