@@ -72,14 +72,7 @@ def resetAdherence(request):
 				medication_single = medication_instance.get(color=data.get("color"))
 				if medication_single.adherence:
 					retData = json.loads(medication_single.adherence)
-					retData['times'] = ""
-					medication_single.adherence = json.dumps(retData)
-					medication_single.save(update_fields=['adherence'])
-				else:
-					retData = {
-						'times' :[]
-					}
-					retData['times'].append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+					retData['times'] = []
 					medication_single.adherence = json.dumps(retData)
 					medication_single.save(update_fields=['adherence'])
 				return HttpResponse(medication_single.adherence)
